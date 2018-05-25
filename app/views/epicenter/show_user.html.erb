@@ -6,7 +6,7 @@
 
 <p>
     <% if current_user.following.include?(@user.id) %>
-        <%= link_to "Unfollow", unfollow_path(id: @user.id), class: "btn btn-danger" %>
+        <%= link_to "Following", unfollow_path(id: @user.id), class: "btn btn-primary", id: "unfollow_btn" %>
     <% else %>
         <% if current_user.id != @user.id %>
 	    <%= link_to "Follow", now_following_path(id: @user.id), class: "btn btn-primary" %>
@@ -20,3 +20,17 @@
 	<p><%= tweet.message %></p>
     </div>
 <% end %>
+
+<script>
+$(document).on('turbolinks:load', function() {
+  $('#unfollow_btn').hover(function(){
+    $(this).removeClass('btn-primary');
+    $(this).addClass('btn-danger');
+    $(this).html("Unfollow");
+  }, function(){
+    $(this).html("Following");
+    $(this).removeClass('btn-danger');
+    $(this).addClass('btn-primary');
+  });
+})
+</script>
